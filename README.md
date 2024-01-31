@@ -11,4 +11,6 @@ Concepts used in the project:
 - Use of LangChain's indexing API to help with management of indexing of documents in vectorstore
 - Streamlit - a Python package to build the UI.
 
-
+Files:
+- Offline indexing code in notebook: indexing.ipynb
+- Application code in the python files: main.py, agent.py, retriever.py
