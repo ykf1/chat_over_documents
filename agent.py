@@ -7,6 +7,7 @@ from langchain_openai import ChatOpenAI
 
 from retriever import compression_retriever
 
+
 load_dotenv()
 
 tool = create_retriever_tool(
@@ -69,10 +70,12 @@ agent_executor = AgentExecutor(
 )
 
 def invoke_agent(question: str, chat_history: list) -> str:
-    """to update"""
+    """invokes the agent executor. Returns the output of the agent"""
+
     response = agent_executor.invoke({
         "input": question, 
         'chat_history': chat_history
     })
-    # agent response format is {'input': question, 'output': answer}
+
+    # agent response output format is {'input': question, 'output': answer}
     return response["output"]

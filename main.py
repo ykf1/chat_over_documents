@@ -8,26 +8,22 @@ def main():
 
     st.header("Chat with your documents :books:")
 
-    # Initialise messages (chat history)
+    # Initialise messages list (chat history) if does not exist on first run 
     if 'messages' not in st.session_state:
         st.session_state['messages'] = []
 
     # Display chat messages from history
-    #messages = st.session_state.get('messages', [])
     for msg in st.session_state['messages']:
         if isinstance(msg, AIMessage):
             st.chat_message("assistant").write(msg.content)
         elif isinstance(msg, HumanMessage):
             st.chat_message("user").write(msg.content)
 
-
-    # Next conversation - user input and assistant response
+    # Next conversation - user input and AI response
     if prompt := st.chat_input("Ask a question "):
 
-        # Display user message and append to session state messages
         st.chat_message("user").write(prompt)
 
-        # Get AI response based on the user input
         with st.chat_message("assistant"):
 
             with st.spinner("AI is thinking ..."):
@@ -39,6 +35,7 @@ def main():
 
 
 def save_chat_history(messages: list, question: str, answer: str) -> None:
+    """Adds the question and answer to the messages list"""
     messages.extend([
         HumanMessage(content=question),
         AIMessage(content=answer)
@@ -47,26 +44,3 @@ def save_chat_history(messages: list, question: str, answer: str) -> None:
 
 if __name__ == "__main__":
     main()
-
-
-    # # For upload of documents
-    # with st.sidebar:
-    #     st.subheader("Your documents")
-    #     pdf_files = st.file_uploader(
-    #         "Upload your PDF here and click on 'Process'",
-    #         accept_multiple_files=True            
-    #         )
-    #     if st.button("Process"):
-
-    #         uploaded_filepaths = upload_files(pdf_files)
-
-    #         with st.spinner("Embedding..."):
-    #             embed_documents(uploaded_filepaths)
-
-    #         with st.spinner("Initialise chatbot..."):  
-    #             st.session_state.conversation = Conversation()
-        
-    #     st.subheader("Uploaded documents")
-
-    #     for file in os.listdir(upload_file_directory):
-    #         st.markdown(file)
